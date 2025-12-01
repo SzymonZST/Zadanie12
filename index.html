@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZADANIE 12</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    .container {
+      margin: 20px;
+    }
+
+    div {
+      padding: 20px;
+      margin: 10px 0;
+      border: 2px solid #ccc;
+      background-color: #f9f9f9;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 8px;
+      margin: 5px 0;
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+
+    li:hover {
+      background-color: #d3d3d3;
+    }
+
+    .active {
+      background-color: #add8e6;
+    }
+
+    .highlight {
+      background-color: yellow;
+    }
+
+    .nav-button {
+      padding: 8px 15px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .nav-button:hover {
+      background-color: #0056b3;
+    }
+
+    .tree-output {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container"></div>
+   
+    <div class="outer">
+      <div class="inner">
+        <p class="target">Akapit 1</p>
+        <p>Akapit 2</p>
+      </div>
+      <ul>
+        <li>Lista 1</li>
+        <li>Lista 2</li>
+        <li>Lista 3</li>
+      </ul>
+    </div>
+
+    <div class="outer">
+      <div class="inner">
+        <p>Akapit 3</p>
+        <p>Akapit 4</p>
+      </div>
+      <ul>
+        <li>Lista 4</li>
+        <li>Lista 5</li>
+        <li>Lista 6</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button id="change-bg" class="nav-button">Zmień tło nadrzędnego elementu</button>
+      <button id="highlight-parents" class="nav-button">Zaznacz przodków</button>
+      <button id="highlight-children" class="nav-button">Zaznacz dzieci div</button>
+      <button id="highlight-siblings" class="nav-button">Podświetl rodzeństwo li</button>
+      <button id="find-span" class="nav-button">Znajdź wszystkie span</button>
+      <button id="add-target" class="nav-button">Dodaj target=_blank do linków</button>
+    </div>
+
+    <div class="tree-output" id="output"></div>
+    <div class="navigation">
+      <button id="show-ancestors" class="nav-button">Pokaż przodków elementu</button>
+      <button id="show-children" class="nav-button">Pokaż dzieci elementu</button>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+
+     
+      $('#change-bg').click(function() {
+        $('.target').parent().css('background-color', '#ffeb3b');
+      });
+
+     
+      $('#highlight-parents').click(function() {
+        $('.target').parents().css('border', '2px solid red');
+      });
+
+ 
+      $('#highlight-children').click(function() {
+        $('.inner').children().css('background-color', '#c8e6c9');
+      });
+
+     
+      $('li').click(function() {
+        $(this).siblings().css('background-color', '#ffccbc');
+        $(this).addClass('active').siblings().removeClass('active');
+      });
+
+
+      $('#find-span').click(function() {
+        $('div').find('span').css('color', 'red');
+      });
+
+    
+      $('#add-target').click(function() {
+        $('a').attr('target', '_blank');
+      });
+
+
+      $('#show-ancestors').click(function() {
+        var ancestors = $('.target').parents().map(function() {
+          return this.tagName;
+        }).get().join(' -> ');
+        $('#output').text('Przodkowie: ' + ancestors);
+      });
+
+   
+      $('#show-children').click(function() {
+        var children = $('.target').children().map(function() {
+          return this.tagName;
+        }).get().join(' -> ');
+        $('#output').text('Dzieci: ' + children);
+      });
+
+    });
+  </script>
+
+</body>
+</html>
